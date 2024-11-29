@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumindo API com JavaScript</title>
+</head>
+
+<body>
+    <h1>Mensagem da API:</h1>
+    <p id="mensagem"></p>
+    <p id="mensagem2"></p>
+    <div>
+
+    </div>
+
+    <script>
+        fetch('http://127.0.0.1:5000/api/cliente')
+
+            .then(response => response.json())
+            .then(data =>{
+                document.getElementById('mensagem').textContent = data.cliente;
+                document.getElementById('mensagem2').textContent = data.telefone;
+            })
+            .catch(error => {
+                console.error('Erro ao consumir a API: ', error)
+            })
+    </script>
+</body>
+</html>

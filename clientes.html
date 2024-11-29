@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+            </tr>
+        </thead>
+        <tbody id="clientes-list">
+            <!-- Os clientes serão inseridos aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        // Função para buscar os clientes e exibir na tabela
+        function carregarClientes() {
+            fetch('http://127.0.0.1:5000/getclientes')  // Fazendo a requisição para a API Flask
+                .then(response => response.json())  // Convertendo a resposta para JSON
+                .then(data => {
+                    const lista = document.getElementById('clientes-list');
+                    lista.innerHTML = ''; // Limpar a tabela antes de adicionar
+
+                    // Adicionando os dados dos clientes à tabela
+                    data.forEach(cliente => {
+                        const tr = document.createElement('tr');
+                        const tdNome = document.createElement('td');
+                        const tdTelefone = document.createElement('td');
+                        tdNome.textContent = cliente.nome;
+                        tdTelefone.textContent = cliente.telefone;
+                        tr.appendChild(tdNome);
+                        tr.appendChild(tdTelefone);
+                        lista.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar clientes:', error);
+                });
+        }
+
+        // Carregar os clientes quando a página for carregada
+        window.onload = carregarClientes;
+    </script>
+</body>
+</html>
